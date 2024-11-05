@@ -3,6 +3,7 @@ import json
 import string
 import re
 import pickle
+import argparse
 import numpy as np
 from gensim.models import Word2Vec
 from keras.api import Sequential
@@ -179,7 +180,7 @@ class TextClassifier:
 
         return model
 
-    def train(self, train_file: str, val_file: str, epochs: int, batch_size: int):
+    def train(self, train_file: str, val_file: str, epochs: int, batch_size: int, model_name: str):
         """Train the NN model"""
         # Load data
         train_data, val_data = self.load_data(train_file, val_file)
@@ -193,18 +194,18 @@ class TextClassifier:
         # Build and train model
         model = self.build_model()
         early_stop = EarlyStopping(monitor='val_loss', patience=8, mode='min', restore_best_weights=True, verbose=1)
-        learning_rate_reduction = ReduceLROnPlateau(monitor='val_loss', patience=2, verbose=1, factor=0.5, min_lr=0.00001)
+        lr_reduction = ReduceLROnPlateau(monitor='val_loss', patience=2, verbose=1, factor=0.5, min_lr=0.00001)
         history = model.fit(
             train_sequences,
             train_labels,
             validation_data=(val_sequences, val_labels),
             epochs=epochs,
             batch_size=batch_size,
-            callbacks=[early_stop, learning_rate_reduction]
+            callbacks=[early_stop, lr_reduction]
         )
 
         # Save NN model
-        model_path = pathlib.Path('model/text_classifier_model.keras')
+        model_path = pathlib.Path(model_name)
         model_path.parent.mkdir(parents=True, exist_ok=True)
         model.save(model_path)
 
@@ -212,27 +213,41 @@ class TextClassifier:
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Text Classifier Training')
 
-    # Initialize with custom parameters
-    model_params = {
-        'max_sequence_length': 150,
-        'conv_filters': [128, 64],
-        'conv_kernel_sizes': [5, 3],
-        'lstm_units': [64, 32],
-        'dense_units': [64, 32],
-        'dropout_rate': [0.5, 0.3],
-        'learning_rate': 0.0001
-    }
+    # Add arguments for file paths
+    parser.add_argument('--train_file', type=str, default='data/train.jsonl',
+                        help='Path to training file')
+    parser.add_argument('--val_file', type=str, default='data/dev.jsonl',
+                        help='Path to validation file')
+    parser.add_argument('--model_name', type=str, default='model/text_classifier_model.keras',
+                        help='Path to save the model')
 
-    w2v_params = {
-        'vector_size': 100,
-        'window': 4,
-        'min_count': 2,
-        'workers': 2
-    }
+    # Add arguments for model_params, w2v_params, and training_params
+    parser.add_argument('--model_params', type=json.loads,
+                        default='{"max_sequence_length": 150, '
+                                '"conv_filters": [128, 64], '
+                                '"conv_kernel_sizes": [5, 3], '
+                                '"lstm_units": [64, 32], '
+                                '"dense_units": [64, 32], '
+                                '"dropout_rate": [0.5, 0.3], '
+                                '"learning_rate": 0.0001}',
+                        help='JSON string of model parameters')
+    parser.add_argument('--w2v_params', type=json.loads,
+                        default='{"vector_size": 100, "window": 4, "min_count": 2, "workers": 2}',
+                        help='JSON string of Word2Vec parameters')
+    parser.add_argument('--training_params', type=json.loads,
+                        default='{"epochs": 10, "batch_size": 256}',
+                        help='JSON string of training parameters')
+
+    args = parser.parse_args()
 
     # Create Classification class and train model
-    classifier = TextClassifier(w2v_params=w2v_params, model_params=model_params)
-    model, history = classifier.train('data/train.jsonl', 'data/dev.jsonl', epochs=5, batch_size=256)
+    classifier = TextClassifier(w2v_params=args.w2v_params, model_params=args.model_params)
+    model, history = classifier.train(args.train_file,
+                                      args.val_file,
+                                      epochs=args.training_params["epochs"],
+                                      batch_size=args.training_params["batch_size"],
+                                      model_name=args.model_name)
     print(model.summary())
     print(history.history)
