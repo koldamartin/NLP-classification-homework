@@ -2,7 +2,7 @@
  - Train a model for multi-class classification of 42 unique news categories
 
 ### Tech stack
- - Keras API
+ - Keras API, Tensorflow backend
  - Word2Vec
 
 ### Solution
@@ -14,8 +14,9 @@
  - Model is trained to predict the news category based on the 'category' column
 
 ### Results
- - Very low accuracy, only 20%
- - Techniques to deal with imbalanced dataset: Resampling, SMOTE, Class weighting
+ - Very low accuracy, only 21%
+ - Model effectively predicts only 3 classes POLITICS, WELLNESS, ENTERTAINMENT
+ - Techniques needed to deal with imbalanced dataset must be implemented!
 
 ### About the scripts
  - train.py: Input training/evaluation data and parameters and get trained Keras model 
@@ -25,6 +26,9 @@
  - classify.py: Input trained model path and test data and get classification predictions on the test dataset
     - **output** test_output.jsonl file with predictions saved into data folder 
 
+### Install requirements
+ - `pip install -r requirements.txt`
+
 ### Get help to see parameters for running the scripts
  - run `python train.py --help` (or evaluate.py or classify.py)
 
@@ -32,4 +36,4 @@
  - Train model: eg. `python train.py --training_params '{"""epochs""": 20}'` 
  - Evaluate model: `python evaluate.py --model_path path/to/your/model.keras --dev_data path/to/your/dev_data.jsonl`
  - Classify text: `python classify.py --model_path path/to/your/model.keras --test_data path/to/your/test_data.jsonl`
- - check all possible parameters using --help
+ - all parameters are optional, as all of them are set by default
