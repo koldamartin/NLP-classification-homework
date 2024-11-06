@@ -8,6 +8,7 @@ from train import TextClassifier
 
 
 def predict_classes(nn_model, classifier, test_data: list, test_sequences: np.ndarray) -> None:
+    """ Predict the classes of test data and create test_output.jsonl file"""
     # Get predictions
     y_test_pred = nn_model.predict(test_sequences)
     y_test_pred_classes = np.argmax(y_test_pred, axis=1)

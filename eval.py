@@ -8,6 +8,7 @@ from train import TextClassifier
 
 
 def evaluate(nn_model, classifier, eval_sequences: np.ndarray, eval_labels: np.ndarray) -> None:
+    """ Evaluate the model on the evaluation dataset and print results"""
     # Get predictions
     y_eval_pred = nn_model.predict(eval_sequences)
     y_eval_pred_classes = np.argmax(y_eval_pred, axis=1)
