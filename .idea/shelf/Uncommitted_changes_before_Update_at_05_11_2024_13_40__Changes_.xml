@@ -1,0 +1,14 @@
+<changelist name="Uncommitted_changes_before_Update_at_05_11_2024_13_40_[Changes]" date="1730810427254" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_11_2024_13_40_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 05.11.2024 13:40 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="model/tokenizer.pkl" />
+    <option name="AFTER_PATH" value="model/tokenizer.pkl" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_11_2024_13_40_[Changes]/tokenizer.pkl" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="model/word2vec_model" />
+    <option name="AFTER_PATH" value="model/word2vec_model" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_11_2024_13_40_[Changes]/word2vec_model" />
+  </binary>
+</changelist>
