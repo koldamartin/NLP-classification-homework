@@ -193,7 +193,7 @@ class TextClassifier:
 
         # Build and train model
         model = self.build_model()
-        early_stop = EarlyStopping(monitor='val_loss', patience=8, mode='min', restore_best_weights=True, verbose=1)
+        early_stop = EarlyStopping(monitor='val_loss', patience=5, mode='min', restore_best_weights=True, verbose=1)
         lr_reduction = ReduceLROnPlateau(monitor='val_loss', patience=2, verbose=1, factor=0.5, min_lr=0.00001)
         history = model.fit(
             train_sequences,
@@ -237,7 +237,7 @@ if __name__ == '__main__':
                         default='{"vector_size": 100, "window": 4, "min_count": 2, "workers": 2}',
                         help='JSON string of Word2Vec parameters')
     parser.add_argument('--training_params', type=json.loads,
-                        default='{"epochs": 10, "batch_size": 256}',
+                        default='{"epochs": 200, "batch_size": 256}',
                         help='JSON string of training parameters')
 
     args = parser.parse_args()
