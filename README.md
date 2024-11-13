@@ -33,7 +33,10 @@
  - run `python train.py --help` (or evaluate.py or classify.py)
 
 ### Running the scripts (On Windows using PowerShell)
- - Train model: eg. `python train.py --training_params '{"""epochs""": 20}'` 
+ - Train model: eg. `python train.py --training_params '{"""epochs""": 20, """batch_size""": 128}'` 
  - Evaluate model: `python evaluate.py --model_path path/to/your/model.keras --dev_data path/to/your/dev_data.jsonl`
  - Classify text: `python classify.py --model_path path/to/your/model.keras --test_data path/to/your/test_data.jsonl`
  - all parameters are optional, as all of them are set by default
+
+### Running the scripts (on Linux using bash)
+ - Train model: eg. `python train.py --training_params '{"epochs": 20, "batch_size": 128}'` 

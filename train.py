@@ -17,8 +17,14 @@ import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
-nltk.download('punkt')
-nltk.download('stopwords')
+
+def download_nltk_data():
+    try:
+        nltk.data.find('tokenizers/punkt_tab')
+        nltk.data.find('corpora/stopwords')
+    except LookupError:
+        nltk.download('punkt_tab')
+        nltk.download('stopwords')
 
 
 class TextClassifier:
@@ -213,6 +219,7 @@ class TextClassifier:
 
 
 if __name__ == '__main__':
+    download_nltk_data()
     parser = argparse.ArgumentParser(description='Text Classifier Training')
 
     # Add arguments for file paths
