@@ -39,4 +39,9 @@
  - all parameters are optional, as all of them are set by default
 
 ### Running the scripts (on Linux using bash)
- - Train model: eg. `python train.py --training_params '{"epochs": 20, "batch_size": 128}'` 
+ - Train model: eg. `python train.py --training_params '{"epochs": 20, "batch_size": 128}'`
+
+### Running train.py using Docker
+- Start Docker Desktop
+- Build image with`docker build -t my-image .`
+- Then start the container with `docker run my-image`
